@@ -1,6 +1,11 @@
 name: ci-build
 run-name: CI Pipeline
 on: [push] # to be replaced with proper condition
+
+concurrency:
+  group: build
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,7 +30,7 @@ jobs:
           gRPC_INSTALL=ON
           gRPC_BUILD_TESTS=OFF
           gRPC_BACKWARDS_COMPATIBILITY_MODE=ON
-        build_args: -j
+        build-args: -j
     - name: checkout otel
       uses: actions/checkout@v4.2.2
       with:
@@ -48,7 +53,7 @@ jobs:
           WITH_EXAMPLES=OFF
           WITH_OTLP_GRPC=ON
           WITH_OTLP_HTTP=OFF
-        build_args: -j
+        build-args: -j
       # might not be present in ubuntu-latest runner:
       # -DCMAKE_C_COMPILER=icc
       # -DCMAKE_CXX_COMPILER=icpc
