@@ -13,7 +13,7 @@ jobs:
         submodules: true
 
     - name: build gRPC
-      uses: actions/cmake-action@v2.1.0
+      uses: threeal/cmake-action@v2.1.0
       with:
         source-dir: ./grpc
         build-dir: ./grpc/build
@@ -33,7 +33,7 @@ jobs:
         submodules: true
 
     - name: build otel
-      uses: actions/cmake-action@v2.1.0
+      uses: threeal/cmake-action@v2.1.0
       with:
         source-dir: ./otel
         build-dir: ./otel/build
