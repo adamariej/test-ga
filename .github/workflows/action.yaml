@@ -3,54 +3,54 @@ run-name: CI Pipeline
 on: [push] # to be replaced with proper condition
 jobs:
   build:
-	runs-on: ubuntu-latest
-	steps:
-	  - name: checkout gRPC
-		uses: actions/checkout@v4.2.2
-		with:
-		  repository: grpc/grpc@v1.60.0
-		  path: grpc
-		  submodules: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout gRPC
+        uses: actions/checkout@v4.2.2
+        with:
+          repository: grpc/grpc@v1.60.0
+          path: grpc
+          submodules: true
 
-	  - name: build gRPC
-		uses: actions/cmake-action@v2.1.0
-		with:
-		  source-dir: ./grpc
-		  build-dir: ./grpc/build
-		  generator: make
-		  options: |
-			-DABSL_PROPAGATE_CXX_STD=ON
-			-DCMAKE_BUILD_TYPE=Release
-			-DgRPC_INSTALL=ON
-			-DgRPC_BUILD_TESTS=OFF
-			-DCMAKE_INSTALL_PREFIX=$LocalPath/Install
-			-DgRPC_BACKWARDS_COMPATIBILITY_MODE=ON
-	  - name: checkout otel
-		uses: actions/checkout@v4.2.2
-		with:
-		  repository: open-telemetry/opentelemetry-cpp@v1.14.2
-		  path: otel
-		  submodules: true
+      - name: build gRPC
+        uses: actions/cmake-action@v2.1.0
+        with:
+          source-dir: ./grpc
+          build-dir: ./grpc/build
+          generator: make
+          options: |
+            -DABSL_PROPAGATE_CXX_STD=ON
+            -DCMAKE_BUILD_TYPE=Release
+            -DgRPC_INSTALL=ON
+            -DgRPC_BUILD_TESTS=OFF
+            -DCMAKE_INSTALL_PREFIX=$LocalPath/Install
+            -DgRPC_BACKWARDS_COMPATIBILITY_MODE=ON
+      - name: checkout otel
+        uses: actions/checkout@v4.2.2
+        with:
+          repository: open-telemetry/opentelemetry-cpp@v1.14.2
+          path: otel
+          submodules: true
 
-	  - name: build otel
-		uses: actions/cmake-action@v2.1.0
-		with:
-			source-dir: ./otel
-			build-dir: ./otel/build
-			generator: make
-			options: |
-				-DCMAKE_POSITION_INDEPENDENT_CODE=ON
-				-DWITH_ABSEIL=ON
-				-DBUILD_TESTING=OFF
-				-DWITH_EXAMPLES=OFF
-				-DCMAKE_BUILD_TYPE=Release
-				-DWITH_OTLP_GRPC=ON
-				-DWITH_OTLP_HTTP=OFF
-				-DCMAKE_INSTALL_PREFIX=$LocalPath/Install
-		]
-		# might not be present in ubuntu-latest runner:
-		# -DCMAKE_C_COMPILER=icc
-		# -DCMAKE_CXX_COMPILER=icpc
+      - name: build otel
+        uses: actions/cmake-action@v2.1.0
+        with:
+          source-dir: ./otel
+          build-dir: ./otel/build
+          generator: make
+          options: |
+            -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+            -DWITH_ABSEIL=ON
+            -DBUILD_TESTING=OFF
+            -DWITH_EXAMPLES=OFF
+            -DCMAKE_BUILD_TYPE=Release
+            -DWITH_OTLP_GRPC=ON
+            -DWITH_OTLP_HTTP=OFF
+            -DCMAKE_INSTALL_PREFIX=$LocalPath/Install
+      ]
+      # might not be present in ubuntu-latest runner:
+      # -DCMAKE_C_COMPILER=icc
+      # -DCMAKE_CXX_COMPILER=icpc
 
 
 
