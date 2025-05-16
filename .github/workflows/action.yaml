@@ -21,14 +21,15 @@ jobs:
         options: |
           ABSL_PROPAGATE_CXX_STD=ON
           CMAKE_BUILD_TYPE=Release
+          CMAKE_INSTALL_PREFIX=$LocalPath/Install
           gRPC_INSTALL=ON
           gRPC_BUILD_TESTS=OFF
-          CMAKE_INSTALL_PREFIX=$LocalPath/Install
           gRPC_BACKWARDS_COMPATIBILITY_MODE=ON
+        build_args: -j
     - name: checkout otel
       uses: actions/checkout@v4.2.2
       with:
-        repository: open-telemetry/opentelemetry-cpp@
+        repository: open-telemetry/opentelemetry-cpp
         ref: v1.14.2
         path: otel
         submodules: true
@@ -39,14 +40,15 @@ jobs:
         source-dir: ./otel
         build-dir: ./otel/build
         options: |
-          DCMAKE_POSITION_INDEPENDENT_CODE=ON
-          WITH_ABSEIL=ON
-          BUILD_TESTING=OFF
-          WITH_EXAMPLES=OFF
           CMAKE_BUILD_TYPE=Release
-          WITH_OTLP_GRPC=ON
-          DWITH_OTLP_HTTP=OFF
           CMAKE_INSTALL_PREFIX=$LocalPath/Install
+          CMAKE_POSITION_INDEPENDENT_CODE=ON
+          BUILD_TESTING=OFF
+          WITH_ABSEIL=ON
+          WITH_EXAMPLES=OFF
+          WITH_OTLP_GRPC=ON
+          WITH_OTLP_HTTP=OFF
+        build_args: -j
       # might not be present in ubuntu-latest runner:
       # -DCMAKE_C_COMPILER=icc
       # -DCMAKE_CXX_COMPILER=icpc
