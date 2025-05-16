@@ -18,7 +18,6 @@ jobs:
       with:
         source-dir: ./grpc
         build-dir: ./grpc/build
-        generator: make
         options: |
           ABSL_PROPAGATE_CXX_STD=ON
           CMAKE_BUILD_TYPE=Release
@@ -39,7 +38,6 @@ jobs:
       with:
         source-dir: ./otel
         build-dir: ./otel/build
-        generator: make
         options: |
           DCMAKE_POSITION_INDEPENDENT_CODE=ON
           WITH_ABSEIL=ON
